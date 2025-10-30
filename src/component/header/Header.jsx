@@ -1,18 +1,21 @@
 import React from 'react'
 import { Menu, Search, Upload, Bell, User } from 'lucide-react'
+import Logo from '../Logo'
 
 
 
-function Header() {
+function Header({toggleSidebar}) {
   return (
     <header className="fixed top-0 left-0 right-0 z-10 bg-gray-900 border-b border-gray-700 h-16 flex items-center justify-between px-4 lg:px-8 shadow-xl">
       {/* Left Section: Logo and Mobile Menu */}
       <div className='flex items-center'>
         <button 
+        onClick={toggleSidebar}
           className = 'p-2 rounded-full text-purple-400 hover:bg-gray-800 transition duration-150 lg:hidden'
           aria-label="Toggle Sidebar"
         >
           <Menu className='w-6 h-6' />
+          {/* <Logo /> */}
         </button>
       </div>
 
