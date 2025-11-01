@@ -1,8 +1,14 @@
-import React from 'react'
+import { VideoGridContainer ,VideoCard } from "../component/index.js"
+import {WelcomeBanner} from '../component/index.js'
 
-function Home() {
+function Home({isExplore}) {
   return (
-    <div>Home</div>
+    <div className="p-4">
+        <WelcomeBanner />
+        <VideoGridContainer />
+        <div className="h-16">
+        </div>
+    </div>
   )
 }
 
