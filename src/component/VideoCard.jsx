@@ -1,13 +1,19 @@
 import React from "react";
 import { Eye, Clock } from "lucide-react";
-import { formatViews, formatDuration, formatTimeAgo } from "../utils/DataFormator.js";
+import {
+  formatViews,
+  formatDuration,
+  formatTimeAgo,
+} from "../utils/DataFormator.js";
+import { useNavigate } from "react-router-dom";
 
-const FALLBACK_IMAGE_URL = "https://via.placeholder.com/320x180?text=No+Thumbnail";
+const FALLBACK_IMAGE_URL =
+  "https://via.placeholder.com/320x180?text=No+Thumbnail";
 
-function VideoCard({ video = {} , isSuggested = false }) {
-
-  if(!video){
-    return null
+function VideoCard({ video = {} }) {
+  const navigate = useNavigate()
+  if (!video) {
+    return null;
   }
 
   const formattedViews = formatViews(video.views || 0);
@@ -15,10 +21,16 @@ function VideoCard({ video = {} , isSuggested = false }) {
   const timeAgo = formatTimeAgo(video.createdAt);
 
   // const channelName = video.owner.username;
-  
+
+  const handleCardClick = () => {
+    // Router-style navigation using a function signature compatible with App's navigate
+    navigate(`/watch/${video.videoId}`);
+  };
+
   return (
-    <div className="flex flex-col space-y-2 cursor-pointer transition duration-300 ease-in-out transform hover:shadow-2xl hover:shadow-purple-700/50 rounded-xl overflow-hidden bg-gray-800"
-    >
+    <div 
+    onClick={handleCardClick}
+    className="flex flex-col space-y-2 cursor-pointer transition duration-300 ease-in-out transform hover:shadow-2xl hover:shadow-purple-700/50 rounded-xl overflow-hidden bg-gray-800">
       {/* thumbnail */}
       <div className="aspect-video relative">
         <img
@@ -28,7 +40,7 @@ function VideoCard({ video = {} , isSuggested = false }) {
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = FALLBACK_IMAGE_URL;
-          }} 
+          }}
         />
 
         {/* Dynamic Duration Overlay */}
@@ -40,7 +52,7 @@ function VideoCard({ video = {} , isSuggested = false }) {
       </div>
 
       {/* video Info */}
-      <div className={`${isSuggested ? 'w-3/5' : 'p-3'}`}>
+      <div>
         <p
           className="text-gray-50 text-base font-semibold line-clamp-2"
           title={video.title}
@@ -51,7 +63,6 @@ function VideoCard({ video = {} , isSuggested = false }) {
         {/* <p className="text-gray-400 text-sm mt-1">{channelName}</p> */}
 
         <div className="flex items-center text-gray-500 text-xs mt-0.5">
-
           {/* views */}
           <Eye className="w-3 h-3 mr-1" />
           <span>{formattedViews} views</span>

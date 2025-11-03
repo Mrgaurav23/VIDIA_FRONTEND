@@ -3,7 +3,6 @@ import { Header } from "./component/index";
 import { useState } from "react";
 import { Sidebar } from "./component/index";
 
-import { ProfileDashboard } from "./component/index";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
