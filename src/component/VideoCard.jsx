@@ -10,9 +10,9 @@ import { useNavigate } from "react-router-dom";
 const FALLBACK_IMAGE_URL =
   "https://via.placeholder.com/320x180?text=No+Thumbnail";
 
-function VideoCard({ video = {} }) {
+function VideoCard({ video = {}, }) {
   const navigate = useNavigate()
-  if (!video) {
+  if (!video) {  
     return null;
   }
 
@@ -24,7 +24,7 @@ function VideoCard({ video = {} }) {
 
   const handleCardClick = () => {
     // Router-style navigation using a function signature compatible with App's navigate
-    navigate(`/watch/${video.videoId}`);
+    navigate(`/watch/${video._id}`);
   };
 
   return (

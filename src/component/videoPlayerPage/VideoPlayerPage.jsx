@@ -1,47 +1,41 @@
 import { ThumbsDown, ThumbsUp, Send, User, ChevronDown } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate,useParams } from "react-router-dom";
+import api from "../../utils/axios";
 
-const mockVideos = [
-  {
-    id: 1,
-    title: "Building HyperBlog with React & Custom Backend",
-    channel: "Tech Innovator",
-    views: "1.2K",
-    time: "1 hour ago",
-    thumbnailUrl:
-      "https://placehold.co/400x225/3c3c3c/ffffff?text=React+Backend+Demo",
-    videoId: "b80e46c7-313b-4874-9b59-4d82f7c02b5e",
-  },
-  {
-    id: 2,
-    title: "Deep Dive into Modern Tailwind CSS Layouts",
-    channel: "Design Geek",
-    views: "54K",
-    time: "3 days ago",
-    thumbnailUrl:
-      "https://placehold.co/400x225/4a4a4a/ffffff?text=Tailwind+Grid+Tutorial",
-    videoId: "9d90f91a-7b3b-4a5d-b080-6060c5f2129e",
-  },
-];
 
 // Function to get streaming URL from custom backend
-const getStreamingUrl = (videoId) => {
-  // यहाँ आपको अपने कस्टम बैकएंड को कॉल करने का लॉजिक डालना होगा।
-  // उदाहरण के लिए: return `https://api.yourbackend.com/stream/${videoId}`;
-  console.log(`Fetching stream for video ID: ${videoId}`);
-  return "https://videos.pexels.com/video-files/5045479/5045479-hd_1920_1080_30fps.mp4"; // Dummy video URL
-};
 
 function VideoPlayerPage() {
-  const { videoId } = useParams();
-  const navigate = useNavigate();
+  const {videoId} = useParams()
+  const navigate = useNavigate()
+  
+  const [video,setVideo] = useState(null)
+  const [suggestedVideos,setSuggestedVideos] = useState([])
+  const [loading,setLoading] = useState(true)
+  
+  useEffect(()=>{
+    const fetchVideoData = async ()=>{
+      try {
+        const response = await api.get(`/video/${videoId}`)
+        const videoData = response.data.data || null ;
+        setVideo(videoData)
 
-  const video = mockVideos.find((v) => v.videoId === videoId) || mockVideos[0];
-  const streamUrl = getStreamingUrl(video.videoId);
+        const SuggestedRes = await api.get(`/video`)
+        setSuggestedVideos(
+          (SuggestedRes?.data?.data?.videos || []).filter(v => v?._id !== videoId)
+        )
+      } catch (err) {
+        console.error("Error fetching video:", err);
+      }
+      setLoading(false)
 
-  // Filter suggested videos (exclude the current one)
-  const suggestedVideos = mockVideos.filter((v) => v.videoId !== videoId);
+    }
+    fetchVideoData();
+  },[videoId])
+  
+  if (loading) return <p className="text-white p-10">Loading...</p>;
+  if (!video) return <p className="text-red-500">Video Not Found</p>;
   return (
     <main className="p-4 min-h-screen">
       <div className="flex flex-col lg:flex-row lg:space-x-6">
@@ -49,9 +43,9 @@ function VideoPlayerPage() {
         <div className="flex-1 lg:w-2/3">
           {/* VideoPlayer  */}
           <div className="aspect-video bg-black rounded-xl overflow-hidden shadow-2xl mb-4 border border-gray-700">
-            {streamUrl ? (
+            {video.videoFile ? (
               <video
-                src={streamUrl}
+                src={video.videoFile}
                 controls
                 autoPlay
                 className="w-full h-full object-cover"
@@ -72,8 +66,8 @@ function VideoPlayerPage() {
             <div className="flex items-center space-x-3 mb-3 sm:mb-0">
               <User className="w-10 h-10 rounded-full text-purple-400 bg-gray-700 p-1 flex-shrink-0" />
               <div>
-                <p className="text-white font-semibold">{video.channel}</p>
-                <p className="text-gray-400 text-sm">1.5M Subscribers</p>
+                <p className="text-white font-semibold">{video?.owner?.username || "Unknown Channel"}</p>
+                <p className="text-gray-400 text-sm">{video?.owner?.subscribersCount || 0}</p>
               </div>
               <button className="ml-4 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-full transition">
                 Subscribe
@@ -84,7 +78,7 @@ function VideoPlayerPage() {
               <div className="flex bg-gray-800 rounded-full overflow-hidden border border-gray-700">
                 <button className="px-3 py-2 flex items-center text-gray-300 hover:bg-gray-700 transition">
                   <ThumbsUp className="w-5 h-5 mr-1 text-purple-400" />
-                  {video.views}
+                  {video?.views || 0}
                 </button>
                 <div className="w-px bg-gray-700"></div>
                 <button className="px-3 py-2 flex items-center text-gray-300 hover:bg-gray-700 transition">
@@ -101,7 +95,7 @@ function VideoPlayerPage() {
           {/* Description Box */}
           <div className="bg-gray-800 p-4 rounded-xl text-gray-300 text-sm border border-gray-700">
             <p className="text-gray-400 font-semibold">
-              {video.views} views • {video.time}
+              {video?.views || 0} views • {video.time || ""}
             </p>
             <p className="mt-2 line-clamp-3">
               यह वीडियो इस विषय पर एक गहन ट्यूटोरियल है। हमने इसे अपने कस्टम
@@ -134,7 +128,7 @@ function VideoPlayerPage() {
               </div>
 
               {/* Mock Comments */}
-              {/* <div className="space-y-4">
+              <div className="space-y-4">
                 {[1, 2].map((i) => (
                   <div key={i} className="flex items-start space-x-3">
                     <User className="w-8 h-8 rounded-full text-gray-400 bg-gray-700 p-1 flex-shrink-0" />
@@ -151,7 +145,7 @@ function VideoPlayerPage() {
                     </div>
                   </div>
                 ))}
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
@@ -163,14 +157,14 @@ function VideoPlayerPage() {
           <div className="space-y-4">
             {suggestedVideos.map((sVideo) => (
               <div
-                key={sVideo.id}
-                onClick={() => navigate(`/watch/${sVideo.videoId}`)}
+                key={sVideo._id}
+                onClick={() => navigate(`/watch/${sVideo._id}`)}
                 className="flex space-x-3 cursor-pointer hover:bg-gray-800 p-2 rounded-lg transition"
               >
                 <div className="aspect-video w-32 flex-shrink-0 rounded-lg overflow-hidden relative">
                   <img
-                    src={sVideo.thumbnailUrl}
-                    alt={sVideo.title}
+                    src={sVideo?.thumbnail}
+                    alt={sVideo?.title}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.target.onerror = null;
@@ -179,15 +173,15 @@ function VideoPlayerPage() {
                     }}
                   />
                   <span className="absolute bottom-1 right-1 bg-black bg-opacity-70 text-white text-xs px-1 py-0.5 rounded">
-                    08:08
+                    {sVideo?.time || ""}
                   </span>
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold text-gray-100 line-clamp-2">
-                    {sVideo.title}
+                    {sVideo?.title}
                   </h4>
-                  <p className="text-gray-400 text-xs mt-1">{sVideo.channel}</p>
-                  <p className="text-gray-500 text-xs">{sVideo.views}</p>
+                  <p className="text-gray-400 text-xs mt-1">{sVideo?.channel}</p>
+                  <p className="text-gray-500 text-xs">{sVideo?.views || 0}</p>
                 </div>
               </div>
             ))}
