@@ -4,7 +4,7 @@ import { formatViews, formatDuration, formatTimeAgo } from "../utils/DataFormato
 
 const FALLBACK_IMAGE_URL = "https://via.placeholder.com/320x180?text=No+Thumbnail";
 
-function VideoCard({ video = {} }) {
+function VideoCard({ video = {} , isSuggested = false }) {
 
   if(!video){
     return null
@@ -17,7 +17,8 @@ function VideoCard({ video = {} }) {
   // const channelName = video.owner.username;
   
   return (
-    <div className="flex flex-col space-y-2 cursor-pointer transition duration-300 ease-in-out transform hover:shadow-2xl hover:shadow-purple-700/50 rounded-xl overflow-hidden bg-gray-800">
+    <div className="flex flex-col space-y-2 cursor-pointer transition duration-300 ease-in-out transform hover:shadow-2xl hover:shadow-purple-700/50 rounded-xl overflow-hidden bg-gray-800"
+    >
       {/* thumbnail */}
       <div className="aspect-video relative">
         <img
@@ -39,7 +40,7 @@ function VideoCard({ video = {} }) {
       </div>
 
       {/* video Info */}
-      <div className="py-3 px-3 space-y-1">
+      <div className={`${isSuggested ? 'w-3/5' : 'p-3'}`}>
         <p
           className="text-gray-50 text-base font-semibold line-clamp-2"
           title={video.title}

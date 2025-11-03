@@ -1,6 +1,5 @@
 import React from 'react'
 import { Menu, Search, Upload, Bell, User } from 'lucide-react'
-import Logo from '../Logo'
 
 
 

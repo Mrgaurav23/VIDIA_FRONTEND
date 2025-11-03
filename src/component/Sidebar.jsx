@@ -1,5 +1,5 @@
 import { Compass, Home, User, History } from "lucide-react";
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Sidebar({
   isSidebarOpen,
@@ -7,11 +7,13 @@ function Sidebar({
   setActiveRoute,
   toggleSidebar,
 }) {
+  const navigate = useNavigate();
+
   const navItems = [
-    { name: "Home", icon: Home, route: "home" },
-    { name: "Explore", icon: Compass, route: "explore" },
-    { name: "History", icon: History, route: "history" },
-    { name: "Profile", icon: User, route: "profile" },
+    { name: "Home", icon: Home, route: "/home" },
+    { name: "Explore", icon: Compass, route: "/explore" },
+    { name: "History", icon: History, route: "/profile/history" },
+    { name: "Profile", icon: User, route: "/profile" },
   ];
   return (
     <>
@@ -35,7 +37,10 @@ function Sidebar({
             return (
               <button
                 key={item.route}
-                onClick={() => setActiveRoute(item.route)}
+                onClick={() => {
+                  setActiveRoute(item.route);
+                  navigate(item.route);
+                }}
                 className={`flex items-center w-full px-4 py-3 rounded-xl transition duration-200
               ${
                 isActive

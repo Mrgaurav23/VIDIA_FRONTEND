@@ -4,7 +4,7 @@ import {ProfileNavigation} from '../index.js'
 import {ProfileContentView} from '../index.js'
 
 
-function ProfileDashboard({ initialTab = "History" }) {
+function ProfileDashboard({ initialTab = "history" }) {
   const [activeTab, setActiveTab] = useState(initialTab);
 
   const mockUser = {

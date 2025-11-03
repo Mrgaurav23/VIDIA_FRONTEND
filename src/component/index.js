@@ -14,6 +14,7 @@ import ProfileContentView from './profiledashboard/ProfileContentView.jsx';
 import SettingView from './profiledashboard/SettingView.jsx';
 import SubscriptionView from './profiledashboard/SubscriptionView.jsx';
 import PlaylistsView from './profiledashboard/PlaylistsView.jsx';
+import api from '../utils/axios.js';
 
 export {
     Header,
@@ -31,5 +32,7 @@ export {
     ProfileContentView,
     SettingView,
     SubscriptionView,
-    PlaylistsView
+    PlaylistsView,
+     
+    api,
 }

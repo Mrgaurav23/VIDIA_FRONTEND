@@ -7,6 +7,7 @@ import Login from './pages/Login.jsx'
 import Start from './pages/Start.jsx'
 import Signup from './pages/Signup.jsx'
 import Home from './pages/Home.jsx'
+import { ProfileDashboard } from './component/index.js'
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
     element : <App />,
     children : [
       {
-        path : "/",
+        index : true,
         element : <Start />
       },
       {
@@ -22,12 +23,21 @@ const router = createBrowserRouter([
         element : <Login />
       },
       {
-        path : "Signup",
+        path : "signup",
         element : <Signup />
       },
       {
-        path : "Home",
+        path : "home",
         element : <Home />
+      },
+      //profile routes
+      {
+        path : "profile",
+        element : <ProfileDashboard initialTab='subscriptions' />
+      },
+      {
+        path : "profile/history",
+        element : <ProfileDashboard initialTab='history' />
       }
     ]
   }
