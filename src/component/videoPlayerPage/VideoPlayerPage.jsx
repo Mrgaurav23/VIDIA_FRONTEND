@@ -1,41 +1,23 @@
 import { ThumbsDown, ThumbsUp, Send, User, ChevronDown } from "lucide-react";
-import React, { useEffect, useState } from "react";
 import { useNavigate,useParams } from "react-router-dom";
-import api from "../../utils/axios";
+import {useFetch} from '../index.js'
 
 
-// Function to get streaming URL from custom backend
+
 
 function VideoPlayerPage() {
-  const {videoId} = useParams()
-  const navigate = useNavigate()
-  
-  const [video,setVideo] = useState(null)
-  const [suggestedVideos,setSuggestedVideos] = useState([])
-  const [loading,setLoading] = useState(true)
-  
-  useEffect(()=>{
-    const fetchVideoData = async ()=>{
-      try {
-        const response = await api.get(`/video/${videoId}`)
-        const videoData = response.data.data || null ;
-        setVideo(videoData)
 
-        const SuggestedRes = await api.get(`/video`)
-        setSuggestedVideos(
-          (SuggestedRes?.data?.data?.videos || []).filter(v => v?._id !== videoId)
-        )
-      } catch (err) {
-        console.error("Error fetching video:", err);
-      }
-      setLoading(false)
-
-    }
-    fetchVideoData();
-  },[videoId])
+  const {videoId} = useParams();
+  const navigate = useNavigate();
+  const { data: videoData, loading, error } = useFetch(`/video/${videoId}`);
+  const { data: suggestData } = useFetch(`/video`);
+  const video = videoData || {};
+  const suggestedVideos = suggestData?.videos?.filter((v) => v._id !== videoId) || [];
+  
   
   if (loading) return <p className="text-white p-10">Loading...</p>;
   if (!video) return <p className="text-red-500">Video Not Found</p>;
+  
   return (
     <main className="p-4 min-h-screen">
       <div className="flex flex-col lg:flex-row lg:space-x-6">

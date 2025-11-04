@@ -16,6 +16,7 @@ import SubscriptionView from './profiledashboard/SubscriptionView.jsx';
 import PlaylistsView from './profiledashboard/PlaylistsView.jsx';
 import api from '../utils/axios.js';
 import VideoPlayerPage from './videoPlayerPage/VideoPlayerPage.jsx';
+import useFetch from '../hooks/useFetch.js'
 
 export {
     Header,
@@ -35,7 +36,8 @@ export {
     SubscriptionView,
     PlaylistsView,
      
+    useFetch,
     api,
 
-    VideoPlayerPage,
+    VideoPlayerPage,    
 }
