@@ -1,23 +1,39 @@
 import { ThumbsDown, ThumbsUp, Send, User, ChevronDown } from "lucide-react";
-import { useNavigate,useParams } from "react-router-dom";
-import {useFetch} from '../index.js'
-
-
-
+import { useNavigate, useParams } from "react-router-dom";
+import { useFetch, useMutation } from "../index.js";
+import { useEffect, useState } from "react";
 
 function VideoPlayerPage() {
-
-  const {videoId} = useParams();
+  // Video Data Fetching
+  const { videoId } = useParams();
   const navigate = useNavigate();
   const { data: videoData, loading, error } = useFetch(`/video/${videoId}`);
   const { data: suggestData } = useFetch(`/video`);
   const video = videoData || {};
-  const suggestedVideos = suggestData?.videos?.filter((v) => v._id !== videoId) || [];
-  
-  
+  const suggestedVideos =
+    suggestData?.videos?.filter((v) => v._id !== videoId) || [];
+
+  // Like/Dislike State additional logic can be implemented here
+  const [likeCount, setLikeCount] = useState(video.likeCount || 0);
+  const { mutate } = useMutation();
+
+  useEffect(() => {
+    if (videoData) {
+      setLikeCount(videoData.likeCount || 0);
+    }
+  }, [videoData]);
+
+  //Like button click handler
+  const handleLike = async () => {
+    const response = await mutate("post", `/like/toggle/v/${videoId}`);
+    if (response?.data?.likeCount !== undefined) {
+      setLikeCount(response.data.likeCount);
+    }
+  };
+
   if (loading) return <p className="text-white p-10">Loading...</p>;
   if (!video) return <p className="text-red-500">Video Not Found</p>;
-  
+
   return (
     <main className="p-4 min-h-screen">
       <div className="flex flex-col lg:flex-row lg:space-x-6">
@@ -48,8 +64,12 @@ function VideoPlayerPage() {
             <div className="flex items-center space-x-3 mb-3 sm:mb-0">
               <User className="w-10 h-10 rounded-full text-purple-400 bg-gray-700 p-1 flex-shrink-0" />
               <div>
-                <p className="text-white font-semibold">{video?.owner?.username || "Unknown Channel"}</p>
-                <p className="text-gray-400 text-sm">{video?.owner?.subscribersCount || 0}</p>
+                <p className="text-white font-semibold">
+                  {video?.owner?.username || "Unknown Channel"}
+                </p>
+                <p className="text-gray-400 text-sm">
+                  {video?.owner?.subscribersCount || 0}
+                </p>
               </div>
               <button className="ml-4 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-full transition">
                 Subscribe
@@ -58,9 +78,12 @@ function VideoPlayerPage() {
             <div className="flex space-x-3">
               {/* Like/Dislike Button Group */}
               <div className="flex bg-gray-800 rounded-full overflow-hidden border border-gray-700">
-                <button className="px-3 py-2 flex items-center text-gray-300 hover:bg-gray-700 transition">
+                <button
+                  onClick={handleLike}
+                  className="px-3 py-2 flex items-center text-gray-300 hover:bg-gray-700 transition"
+                >
                   <ThumbsUp className="w-5 h-5 mr-1 text-purple-400" />
-                  {video?.views || 0}
+                  {likeCount}
                 </button>
                 <div className="w-px bg-gray-700"></div>
                 <button className="px-3 py-2 flex items-center text-gray-300 hover:bg-gray-700 transition">
@@ -162,7 +185,9 @@ function VideoPlayerPage() {
                   <h4 className="text-sm font-semibold text-gray-100 line-clamp-2">
                     {sVideo?.title}
                   </h4>
-                  <p className="text-gray-400 text-xs mt-1">{sVideo?.channel}</p>
+                  <p className="text-gray-400 text-xs mt-1">
+                    {sVideo?.channel}
+                  </p>
                   <p className="text-gray-500 text-xs">{sVideo?.views || 0}</p>
                 </div>
               </div>

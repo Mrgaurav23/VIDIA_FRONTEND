@@ -1,7 +1,7 @@
 import { useState } from "react";
-import api from '../component/index.js'
+import {api} from '../component/index.js'
 
-export default function useMutation(){
+function useMutation(){
     const [loading,setLoading] = useState(false)
     const [error,setError] = useState(null)
 
@@ -13,7 +13,7 @@ export default function useMutation(){
             return response.data;
         }
         catch (error) {
-            setError(err?.response?.data?.message || "Something went wrong!");
+            setError(error?.response?.data?.message || "Something went wrong!");
         }
         finally{
             setLoading(false)
@@ -22,3 +22,5 @@ export default function useMutation(){
 
     return { mutate, loading, error }
 }
+
+export default useMutation;

@@ -17,6 +17,7 @@ import PlaylistsView from './profiledashboard/PlaylistsView.jsx';
 import api from '../utils/axios.js';
 import VideoPlayerPage from './videoPlayerPage/VideoPlayerPage.jsx';
 import useFetch from '../hooks/useFetch.js'
+import useMutation from '../hooks/useMutation.js'
 import UploadModel from './videoPlayerPage/UploadModel.jsx';
 import UploadPage from '../pages/UploadPage.jsx'
 
@@ -39,6 +40,7 @@ export {
     PlaylistsView,
      
     useFetch,
+    useMutation,
     api,
 
     VideoPlayerPage, 
