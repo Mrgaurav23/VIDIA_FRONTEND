@@ -35,7 +35,7 @@ function Header({ toggleSidebar }) {
       {/* Right Section: Actions and Profile */}
       <div className="flex items-center space-x-3">
         <button className='p-2 rounded-full text-gray-300 hover:bg-gray-800 hover:text-purple-400 transition duration-150" aria-label="Upload Video'>
-          <Upload className="w-6 h-6" />
+          <Upload className="w-6 h-6" onClick={() => navigate("/upload")} />
         </button>
         <button
           className="p-2 rounded-full text-gray-300 hover:bg-gray-800 hover:text-purple-400 transition duration-150"

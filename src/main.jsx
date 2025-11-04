@@ -9,6 +9,7 @@ import Signup from "./pages/Signup.jsx";
 import Home from "./pages/Home.jsx";
 import { ProfileDashboard } from "./component/index.js";
 import {VideoPlayerPage} from './component/index.js'
+import {UploadPage} from './component/index.js'
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,6 @@ const router = createBrowserRouter([
         path: "home",
         element: <Home />,
       },
-      //profile routes
       {
         path: "profile",
         element: <ProfileDashboard initialTab="subscriptions" />,
@@ -43,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "watch/:videoId",
         element: <VideoPlayerPage  />,
+      },
+
+      { path: "upload",
+        element: <UploadPage /> 
       },
     ],
   },

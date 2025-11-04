@@ -17,6 +17,8 @@ import PlaylistsView from './profiledashboard/PlaylistsView.jsx';
 import api from '../utils/axios.js';
 import VideoPlayerPage from './videoPlayerPage/VideoPlayerPage.jsx';
 import useFetch from '../hooks/useFetch.js'
+import UploadModel from './videoPlayerPage/UploadModel.jsx';
+import UploadPage from '../pages/UploadPage.jsx'
 
 export {
     Header,
@@ -39,5 +41,7 @@ export {
     useFetch,
     api,
 
-    VideoPlayerPage,    
+    VideoPlayerPage, 
+    UploadModel,  
+    UploadPage 
 }
