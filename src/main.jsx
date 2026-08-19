@@ -1,15 +1,17 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.jsx";
+import './index.css'
+import { App } from "./index.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./pages/Login.jsx";
-import Start from "./pages/Start.jsx";
-import Signup from "./pages/Signup.jsx";
-import Home from "./pages/Home.jsx";
-import { ProfileDashboard } from "./component/index.js";
-import {VideoPlayerPage} from './component/index.js'
-import {UploadPage} from './component/index.js'
+import Login from "./pages//auth/Login.jsx";
+import Start from "./component/layout/Start.jsx";
+import Register from "./pages/auth/Register.jsx";
+import { Home } from "./index.js";
+import { ProfileDashboard } from "./index.js";
+import {VideoPlayerPage} from "./index.js"
+import {UploadPage} from './index.js'
+import { Provider } from "react-redux";
+import {store} from './store/store.js'
 
 const router = createBrowserRouter([
   {
@@ -25,8 +27,8 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "signup",
-        element: <Signup />,
+        path: "register",
+        element: <Register />,
       },
       {
         path: "home",
@@ -53,7 +55,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  <Provider store={store}>
     <RouterProvider router={router} />
-  </StrictMode>
+  </Provider>
 );

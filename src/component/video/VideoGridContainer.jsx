@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useFetch, VideoCard } from "../index";
+import { useFetch, VideoCard } from "../../index.js";
 
 function VideoGridContainer() {
   const [page, setPage] = useState(1);

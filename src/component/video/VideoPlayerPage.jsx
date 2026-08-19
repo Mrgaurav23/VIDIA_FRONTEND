@@ -1,7 +1,15 @@
-import { ThumbsDown, ThumbsUp, Send, User, ChevronDown } from "lucide-react";
+import {
+  ThumbsDown,
+  ThumbsUp,
+  Send,
+  User,
+  ChevronDown,
+  CircleX,
+} from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useFetch, useMutation } from "../index.js";
+import { useFetch, useMutation } from "../../index.js";
 import { useEffect, useState } from "react";
+import {api} from '../../index.js'
 
 function VideoPlayerPage() {
   // Video Data Fetching
@@ -17,12 +25,6 @@ function VideoPlayerPage() {
   const [likeCount, setLikeCount] = useState(video.likeCount || 0);
   const { mutate } = useMutation();
 
-  useEffect(() => {
-    if (videoData) {
-      setLikeCount(videoData.likeCount || 0);
-    }
-  }, [videoData]);
-
   //Like button click handler
   const handleLike = async () => {
     const response = await mutate("post", `/like/toggle/v/${videoId}`);
@@ -30,6 +32,64 @@ function VideoPlayerPage() {
       setLikeCount(response.data.likeCount);
     }
   };
+
+  useEffect(() => {
+    if (videoData) {
+      setLikeCount(videoData.likeCount || 0);
+    }
+  }, [videoData]);
+
+  // Comment Stats
+  const [comment, setComment] = useState([]);
+  const [newComment, setNewComment] = useState("");
+
+  const fetchComments = async () => {
+    const response = await mutate("get", `/comment/${videoId}`);
+    if (response?.data) {
+      setComment(response?.data?.comments || []);
+    }
+  };
+
+  const handleAddComment = async () => {
+    if (!newComment.trim()) return;
+    const response = await mutate("post", `/comment/${videoId}`, {
+      content: newComment,
+    });
+
+    if (response?.message) {
+      setNewComment("");
+      fetchComments();
+    }
+  };
+
+  //Delete Comment
+  const handleDeleteComment = async (commentId) => {
+    const response = await mutate("delete", `/comment/c/${commentId}`);
+    if (response?.message) {
+      setComment((prev) => prev.filter((c) => c._id !== commentId));
+    }
+  };
+
+  // ✅ Load Comments When Page Loads
+  useEffect(() => {
+    fetchComments();
+  }, [videoId]);
+
+  //Description
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  //Views
+  useEffect(() => {
+    const fetchVideo = async () => {
+      try {
+        const res = await api.get(`/video/${videoId}`);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchVideo();
+  }, [videoId]);
 
   if (loading) return <p className="text-white p-10">Loading...</p>;
   if (!video) return <p className="text-red-500">Video Not Found</p>;
@@ -100,22 +160,26 @@ function VideoPlayerPage() {
           {/* Description Box */}
           <div className="bg-gray-800 p-4 rounded-xl text-gray-300 text-sm border border-gray-700">
             <p className="text-gray-400 font-semibold">
-              {video?.views || 0} views • {video.time || ""}
+              {video?.views} views • {new Date(video?.createdAt).toDateString()}{" "}
+              views • {video.time || ""}
             </p>
             <p className="mt-2 line-clamp-3">
-              यह वीडियो इस विषय पर एक गहन ट्यूटोरियल है। हमने इसे अपने कस्टम
-              बैकएंड के साथ रिएक्ट में बनाया है ताकि प्रदर्शन और स्केलेबिलिटी
-              सुनिश्चित हो सके। अधिक जानने के लिए सब्सक्राइब करें!
+              {video?.description || "No description provided."}
             </p>
-            <button className="text-purple-400 mt-1 hover:text-purple-300 font-medium">
-              Show more
-            </button>
+            {video.description?.length > 120 && (
+              <button
+                onClick={() => setShowFullDescription(!showFullDescription)}
+                className="text-purple-400 mt-1 hover:text-purple-300 font-medium"
+              >
+                {showFullDescription ? "Show less" : "Show more"}
+              </button>
+            )}
           </div>
 
           {/* Comment Section */}
           <div className="mt-6">
             <h2 className="text-xl font-bold text-white mb-4">
-              Comments (12K)
+              Comments {comment.length}
             </h2>
 
             {/* Comment Input */}
@@ -125,32 +189,49 @@ function VideoPlayerPage() {
                 <input
                   type="text"
                   placeholder="Add a comment..."
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
                   className="w-full py-2 px-3 bg-gray-800 border-b border-gray-700 focus:outline-none focus:border-purple-500 text-gray-200 text-sm rounded-md"
                 />
-                <button className="mt-2 ml-auto block px-4 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-full transition">
+                <button
+                  onClick={handleAddComment}
+                  className="mt-2 px-4 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-full transition"
+                >
                   <Send className="w-4 h-4 inline mr-1" /> Comment
                 </button>
               </div>
+            </div>
 
-              {/* Mock Comments */}
-              <div className="space-y-4">
-                {[1, 2].map((i) => (
-                  <div key={i} className="flex items-start space-x-3">
+            {/* ✅ Comments List Below */}
+            <div className="space-y-4">
+              {comment.length > 0 ? (
+                comment.map((c) => (
+                  <div key={c._id} className="flex items-start space-x-3">
                     <User className="w-8 h-8 rounded-full text-gray-400 bg-gray-700 p-1 flex-shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-white">
-                        Commenter {i}{" "}
+                        {c?.owner?.username || "User"}
                         <span className="text-gray-500 font-normal ml-2 text-xs">
-                          2 days ago
+                          just now
                         </span>
                       </p>
                       <p className="text-gray-300 text-sm mt-0.5">
-                        यह ट्यूटोरियल बहुत उपयोगी था! धन्यवाद!
+                        {c.content}
                       </p>
                     </div>
+                    <button
+                      onClick={() => handleDeleteComment(c._id)}
+                      className="text-red-400 hover:text-red-300 transition"
+                    >
+                      <CircleX className="w-5 h-5" />
+                    </button>
                   </div>
-                ))}
-              </div>
+                ))
+              ) : (
+                <p className="text-gray-500 text-sm">
+                  No comments yet. Be first!
+                </p>
+              )}
             </div>
           </div>
         </div>

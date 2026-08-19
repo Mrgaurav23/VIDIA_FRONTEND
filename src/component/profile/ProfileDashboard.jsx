@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import {ProfileHeaderCard} from '../index.js'
-import {ProfileNavigation} from '../index.js'
-import {ProfileContentView} from '../index.js'
+import {ProfileHeaderCard} from '../../index.js'
+import {ProfileNavigation} from '../../index.js'
+import {ProfileContentView} from '../../index.js'
 
 
 function ProfileDashboard({ initialTab = "history" }) {

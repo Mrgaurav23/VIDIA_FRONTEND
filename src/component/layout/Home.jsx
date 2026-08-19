@@ -1,5 +1,5 @@
-import { VideoGridContainer ,VideoCard } from "../component/index.js"
-import {WelcomeBanner} from '../component/index.js'
+import { VideoGridContainer ,VideoCard } from "../../index.js"
+import {WelcomeBanner} from '../../index.js'
 
 function Home({isExplore}) {
   return (

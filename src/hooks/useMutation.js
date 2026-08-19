@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {api} from '../component/index.js'
+import {api} from '../index.js'
 
 function useMutation(){
     const [loading,setLoading] = useState(false)

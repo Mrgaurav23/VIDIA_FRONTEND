@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Signup() {
+function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -137,6 +137,7 @@ function Signup() {
           disabled={loading}
         >
           {loading ? "Creating..." : "Create Account"}
+          
         </button>
         <p className=" text-white text-center text-lg font-medium">
           Already Account Exist's -{" "}
@@ -149,4 +150,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Register;

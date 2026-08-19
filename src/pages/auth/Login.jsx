@@ -85,7 +85,7 @@ function Login() {
         </button>
         <p className="text-center text-white">
           New Here -{" "}
-          <Link to="/Signup" className="text-blue-600 text-sm font-medium">
+          <Link to="/register" className="text-blue-600 text-sm font-medium">
             Create your Account
           </Link>
         </p>

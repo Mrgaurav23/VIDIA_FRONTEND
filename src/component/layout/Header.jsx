@@ -1,8 +1,9 @@
 import React from "react";
 import { Menu, Search, Upload, Bell, User } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";;
+import { toggleSidebar } from "../../store/sidebarSlice";
 
-function Header({ toggleSidebar }) {
+function Header({toggleSidebar}) {
   const navigate = useNavigate()
   return (
     <header className="fixed top-0 left-0 right-0 z-10 bg-gray-900 border-b border-gray-700 h-16 flex items-center justify-between px-4 lg:px-8 shadow-xl">

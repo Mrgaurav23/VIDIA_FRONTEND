@@ -1,5 +1,5 @@
 import React from 'react'
-import {HistoryView,LikedVideos,PlaylistsView, SettingView, SubscriptionView} from '../index.js'
+import {HistoryView,LikedVideos,PlaylistsView, SettingView, SubscriptionView} from '../../index.js'
 
 function ProfileContentView({activeTab}) {
   if(activeTab === 'history'){

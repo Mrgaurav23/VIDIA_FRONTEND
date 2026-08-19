@@ -1,7 +1,8 @@
 import { Outlet } from "react-router-dom";
-import { Header } from "./component/index";
+import { Header } from "./index.js";
 import { useState } from "react";
-import { Sidebar } from "./component/index";
+import { Sidebar } from "./index.js";
+import { useSelector } from "react-redux";
 
 
 function App() {

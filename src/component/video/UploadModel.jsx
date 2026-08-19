@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { X, Upload, Film, File } from "lucide-react";
-import { api } from "../index.js";
+import { api } from "../../index.js";
 import { useNavigate } from "react-router-dom";
 
 function UploadModel({ onClose }) {
@@ -40,6 +40,7 @@ function UploadModel({ onClose }) {
       const res = await api.post("/video", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      
 
       alert("✅ Video Uploaded Successfully!");
 
@@ -142,7 +143,7 @@ function UploadModel({ onClose }) {
             {/* Description */}
             <textarea
               placeholder="Video Description..."
-              rows="3"
+              rows="4"
               className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 resize-none"
               value={description}
               onChange={(e) => setDescription(e.target.value)}

@@ -1,5 +1,5 @@
 import React from "react";
-import {UploadModel} from "../component/index.js";
+import {UploadModel} from "../../index.js";
 
 function UploadPage() {
   return (

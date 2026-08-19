@@ -1,4 +1,4 @@
-import VideotubeLogo from "../assets/vidia.png"
+import VideotubeLogo from "../../assets/vidia.png"
 
 function Logo({width = "100px" , height = "100px"}) {
   return (

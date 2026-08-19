@@ -4,7 +4,7 @@ import {
   formatViews,
   formatDuration,
   formatTimeAgo,
-} from "../utils/DataFormator.js";
+} from "../../utils/DataFormator.js";
 import { useNavigate } from "react-router-dom";
 
 const FALLBACK_IMAGE_URL =
