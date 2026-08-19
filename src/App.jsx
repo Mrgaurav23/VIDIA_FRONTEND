@@ -4,28 +4,21 @@ import { useState } from "react";
 import { Sidebar } from "./index.js";
 import { useSelector } from "react-redux";
 
-
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [activeRoute, setActiveRoute] = useState('home');
+  const isSidebarOpen = useSelector((state) => state.sidebar.isSidebarOpen);
 
   
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
   return (
     <div className="min-h-screen bg-gray-900 font-sans text-gray-100">
-      <Header toggleSidebar={toggleSidebar} />
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        activeRoute={activeRoute}
-        setActiveRoute={setActiveRoute}
-        toggleSidebar={toggleSidebar}
-      />
+      <Header />
+      <Sidebar />
 
       {/* Main Content Area */}
-      <div className={`mt-16 transition-all duration-300 `}>
+      <div
+        className={`mt-16 transition-all duration-300 ${
+          isSidebarOpen ? "lg:ml-64" : ""
+        }`}
+      >
         <Outlet />
       </div>
 

@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import React,{ StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import './index.css'
 import { App } from "./index.js";
@@ -11,7 +11,8 @@ import { ProfileDashboard } from "./index.js";
 import {VideoPlayerPage} from "./index.js"
 import {UploadPage} from './index.js'
 import { Provider } from "react-redux";
-import {store} from './store/store.js'
+import store from './store/store.js'
+import Twitter from "./component/tweet/Twitter.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
         element: <ProfileDashboard initialTab="history" />,
       },
       {
+        path: "twitter",
+        element : <Twitter /> 
+      },
+      {
         path: "watch/:videoId",
         element: <VideoPlayerPage  />,
       },
@@ -55,7 +60,9 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <RouterProvider router={router} />
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </React.StrictMode>
 );

@@ -11,6 +11,8 @@ function UploadModel({ onClose }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [successMessage,setSuccessMessage] = useState("");
+
 
   const handleFileChange = (e, setFile, type) => {
     const selectedFile = e.target.files[0];
@@ -42,7 +44,8 @@ function UploadModel({ onClose }) {
       });
       
 
-      alert("✅ Video Uploaded Successfully!");
+      //alert("✅ Video Uploaded Successfully!");
+      setSuccessMessage("✅ Video Uploaded Successfully!")
 
       navigate("/home");
       onClose();
@@ -171,7 +174,11 @@ function UploadModel({ onClose }) {
             {isLoading ? "Uploading..." : "Publish Video"}
           </button>
         </div>
-
+        {successMessage && (
+          <div className="mb-5 rounded-lg bg-green-500 px-4 py-3 text-center text-white font-semibold">
+            {successMessage}
+          </div>
+        )}
       </div>
     </div>
   );

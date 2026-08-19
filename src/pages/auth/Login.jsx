@@ -1,12 +1,16 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {login} from '../../store/authSlice'
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading,setLoading] = useState(false)
+  const [successMessage,setSuccessMessage] = useState("")
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -25,13 +29,18 @@ function Login() {
       // Assuming the backend returns data.user and data.accessToken
       const {user, accessToken} = response.data.data
 
-      console.log("Login Successful:", user);
+      if(response.data.success){
+        dispatch(login(user));
+      }
+
+      //console.log("Login Successful:", user);
 
       // Store the token 
       localStorage.setItem('accessToken', accessToken);
 
       // The refresh token is often handled automatically by an HTTP-only cookie set by the backend.
-      alert("Login Successful!");
+      //alert("Login Successful!");
+      setSuccessMessage("Login Successful!")
       navigate("/home")
     } 
     catch (error) {
@@ -56,6 +65,11 @@ function Login() {
         }}
         className="mb-5 "
       >
+        {successMessage && (
+          <div className="mb-5 rounded-lg bg-green-500 px-4 py-3 text-center text-white font-semibold">
+            {successMessage}
+          </div>
+        )}
         <h3 className="text-xl font-medium mb-2 text-white">
           What's Your Email
         </h3>

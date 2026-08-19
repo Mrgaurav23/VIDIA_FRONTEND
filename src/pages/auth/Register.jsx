@@ -10,6 +10,7 @@ function Register() {
   const [avatar, setAvatar] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
@@ -32,13 +33,13 @@ function Register() {
     }
 
     try {
-      const response = await axios.post(registerUrl, formData,{
-        headers : {
-          'Content-Type' : 'multipart/form-data' // Crucial for file upload
-        }
+      const response = await axios.post(registerUrl, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Crucial for file upload
+        },
       });
       console.log("Registrtion Successfully : ", response.data);
-      alert("Account Created Successfully! You can now log in.");
+      setSuccessMessage("Account successfully created! You can now log in.");
       navigate("/login");
     } catch (error) {
       const errorMessage =
@@ -66,6 +67,11 @@ function Register() {
         }}
         className="mb-5 h-screen"
       >
+        {successMessage && (
+          <div className="mb-5 rounded-lg bg-green-500 px-4 py-3 text-center text-white font-semibold">
+            {successMessage}
+          </div>
+        )}
         <h3 className="text-xl font-medium mb-2 text-white">Fullname</h3>
         <input
           value={fullName}
@@ -137,7 +143,6 @@ function Register() {
           disabled={loading}
         >
           {loading ? "Creating..." : "Create Account"}
-          
         </button>
         <p className=" text-white text-center text-lg font-medium">
           Already Account Exist's -{" "}

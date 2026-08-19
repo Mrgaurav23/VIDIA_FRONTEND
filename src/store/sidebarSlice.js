@@ -1,7 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
+import reducer from './authSlice'
 
 const initialState = {
-  isOpen : false,
+  isSidebarOpen : false,
+  activeRoute : "/home"
 }
 
 const sidebarSlice = createSlice({
@@ -9,10 +11,14 @@ const sidebarSlice = createSlice({
   initialState,
   reducers : {
     toggleSidebar : (state) => {
-      state.isOpen = !state.isOpen
+      state.isSidebarOpen = !state.isSidebarOpen
+    },
+
+    setActiveRoute : (state,action) => {
+      state.activeRoute = action.payload
     }
   }
-});
+})
 
-export const {toggleSidebar} = sidebarSlice.actions
+export const { toggleSidebar,setActiveRoute } = sidebarSlice.actions;
 export default sidebarSlice.reducer;

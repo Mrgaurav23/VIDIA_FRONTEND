@@ -17,7 +17,7 @@ function ProfileDashboard({ initialTab = "history" }) {
 
   return (
     <div>
-      <ProfileHeaderCard user={mockUser} />
+      <ProfileHeaderCard user = {mockUser}/>
       <ProfileNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="mt-6 bg-gray-800/50 rounded-xl border border-gray-700/30 min-h-[400px]">
             <ProfileContentView activeTab={activeTab} />
