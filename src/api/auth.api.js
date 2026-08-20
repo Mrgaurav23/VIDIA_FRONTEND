@@ -14,7 +14,7 @@ export const getUserChannelProfile = async (username) => {
     }
 }
 
-/*
+
 export const loginUser = async (credentials) => {
     try {
         const response = await api.post('/users/login', credentials);
@@ -23,15 +23,24 @@ export const loginUser = async (credentials) => {
         throw error;
     }
 };
-*/
 
-/*
+
 export const logoutUser = async () => {
-    try {
-        const response = await api.post('/users/logout');
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+  try {
+    const token = localStorage.getItem("accessToken");
+
+    const response = await api.post(
+      "/users/logout",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
-*/

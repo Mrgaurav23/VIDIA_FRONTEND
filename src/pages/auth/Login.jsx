@@ -2,57 +2,62 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {login} from '../../store/authSlice'
+import { login } from "../../store/authSlice";
+import { loginUser } from "../../api/auth.api";
+import store from "../../store/store";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading,setLoading] = useState(false)
-  const [successMessage,setSuccessMessage] = useState("")
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setLoading(false)
-
-    // Define the API endpoint
-    const loginUrl = "/api/v1/users/login"
+    setLoading(true);
 
     // Data to be sent to the backend
-    const loginData = {email,password}
+    const loginData = { email, password };
 
     try {
       // API Call to Backend
-      const response = await axios.post(loginUrl,loginData)
+      const response = await loginUser(loginData);
+      console.log("========== LOGIN DEBUG ==========");
+      console.log("Full login response:", response);
+      console.log("response.data:", response?.data);
 
       // Assuming the backend returns data.user and data.accessToken
-      const {user, accessToken} = response.data.data
+      const { user, accessToken } = response.data;
+      console.log("User received from backend:", user);
+      console.log("Access token:", accessToken);
 
-      if(response.data.success){
-        dispatch(login(user));
-      }
+      dispatch(login(user));
+      console.log("User dispatched to Redux:", user);
+      console.log("Redux state after dispatch:", store.getState());
 
-      //console.log("Login Successful:", user);
+      console.log("Login Successful:", user);
 
-      // Store the token 
-      localStorage.setItem('accessToken', accessToken);
+      // Store the token
+      localStorage.setItem("accessToken", accessToken);
 
       // The refresh token is often handled automatically by an HTTP-only cookie set by the backend.
       //alert("Login Successful!");
-      setSuccessMessage("Login Successful!")
-      navigate("/home")
-    } 
-    catch (error) {
-      const errorMessage = error.response?.data?.message || error.message || "An unknown error occurred.";
+      setSuccessMessage("Login Successful!");
+      navigate("/home");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "An unknown error occurred.";
 
       console.error("Login Failed:", error);
       alert("Login Failed: " + errorMessage);
-    }
-    finally{
-      setLoading(false)
-      setEmail('');
-      setPassword('');
+    } finally {
+      setLoading(false);
+      setEmail("");
+      setPassword("");
     }
   };
 

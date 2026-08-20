@@ -14,7 +14,7 @@ function useFetch(endpoint,options={}){
             setError(null);
         } 
         catch (error) {
-            setError(err?.response?.data?.message || "Something went wrong!");
+            setError(error?.response?.data?.message || "Something went wrong!");
         }
         finally{
             setLoading(false)

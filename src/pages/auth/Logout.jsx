@@ -3,22 +3,25 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../store/authSlice";
+import { logoutUser } from "../../api/auth.api";
 
 function Logout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const logoutHandler = async () => {
-    const logoutUrl = "api/v1/users/logout";
 
     try {
-      const response = await axios.post(logoutUrl);
+      const response = await logoutUser()
 
-      const { user } = response.data.data;
+      //const { user } = response.data;
 
-      if (response.data.success) {
+      if (response.success) {
         dispatch(logout());
       }
+
+      // Access token remove karo
+        localStorage.removeItem("accessToken");
 
       navigate("/");
     } catch (error) {

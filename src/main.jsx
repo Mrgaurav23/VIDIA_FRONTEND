@@ -37,7 +37,7 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <ProfileDashboard initialTab="subscriptions" />,
+        element: <ProfileDashboard initialTab="settings"  />,
       },
       {
         path: "profile/history",
