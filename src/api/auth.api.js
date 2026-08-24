@@ -1,29 +1,31 @@
 import api from "./axios.js";
 
+
 export const getUserChannelProfile = async (username) => {
-    try {
-        // backend me route kuch is tarah hona chahiye
-        const response = await api.get(`/users/c/${username}`)
+  try {
+    // backend me route kuch is tarah hona chahiye
+    const response = await api.get(`/users/c/${username}`);
 
-        // Backend se jo data aayega, hum directly wahi return kar rahe hain
-        return response.data
-    } catch (error) {
-        // Agar koi error aaye (jaise user not found), toh yahan handle hoga
-        console.error("Error fetching channel profile:", error?.response?.data || error.message);
-        throw error;
-    }
-}
-
-
-export const loginUser = async (credentials) => {
-    try {
-        const response = await api.post('/users/login', credentials);
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    // Backend se jo data aayega, hum directly wahi return kar rahe hain
+    return response.data;
+  } catch (error) {
+    // Agar koi error aaye (jaise user not found), toh yahan handle hoga
+    console.error(
+      "Error fetching channel profile:",
+      error?.response?.data || error.message,
+    );
+    throw error;
+  }
 };
 
+export const loginUser = async (credentials) => {
+  try {
+    const response = await api.post("/users/login", credentials);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const logoutUser = async () => {
   try {
@@ -36,7 +38,7 @@ export const logoutUser = async () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     return response.data;
@@ -44,3 +46,31 @@ export const logoutUser = async () => {
     throw error;
   }
 };
+
+export const updateAccountDetails = async (credentials) => {
+  try {
+    const response = await api.patch("/users/update-account", credentials);
+
+    return response.data;
+  } catch (error) {
+    console.error(
+      "ERROR :: updateAccountDetailsApi",
+      error.response?.data || error.message,
+    );
+
+    throw error;
+  }
+};
+
+export const changePassword = async (credentials) => {
+  try {
+    const response = await api.post("/users/change-password",credentials);
+
+    return response.data
+  } catch (error) {
+    console.error(
+      "ERROR :: changePasswordApi",
+      error.response?.data || error.message,
+    );
+  }
+}

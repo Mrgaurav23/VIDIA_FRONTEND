@@ -13,6 +13,7 @@ import {UploadPage} from './index.js'
 import { Provider } from "react-redux";
 import store from './store/store.js'
 import Twitter from "./component/tweet/Twitter.jsx";
+import ChangePassword from "./pages/auth/ChangePassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,11 @@ const router = createBrowserRouter([
       { path: "upload",
         element: <UploadPage /> 
       },
+
+      {
+        path : "change-password",
+        element : <ChangePassword />
+      }
     ],
   },
 ]);

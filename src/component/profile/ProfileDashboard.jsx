@@ -17,14 +17,18 @@ function ProfileDashboard({ initialTab = "history"}) {
   // username redux se
   const username = userData?.username;
 
+  /*
   console.log("Logged in user:", userData);
   console.log("Username:", username);
 
   console.log("Redux userData:", userData);
   console.log("Profile username:", username);
+  */
 
   const [activeTab, setActiveTab] = useState(initialTab);
-  console.log("Profile username:", username);
+  
+  //console.log("Profile username:", username);
+
   const {user,loading,error} = userChannelProfile(username)
 
   if (loading) {
@@ -38,14 +42,6 @@ function ProfileDashboard({ initialTab = "history"}) {
   if (!user) {
     return <div>Profile not found</div>;
   }
-
-  const mockUser = {
-    username: "@techinnovator",
-    joinDate: "January 2024",
-    totalUploads: 14,
-    followers: 450,
-    avatarUrl: "https://placehold.co/100x100/8b5cf6/ffffff?text=TI",
-  };
 
   return (
     <div>

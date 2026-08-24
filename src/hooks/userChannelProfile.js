@@ -12,7 +12,7 @@ function userChannelProfile(username) {
       setError(null);
 
       const response = await getUserChannelProfile(username);
-      console.log("PROFILE RESPONSE:", response);
+      //console.log("PROFILE RESPONSE:", response);
 
       // ApiResponse ke andar actual user data
       setUser(response?.data);

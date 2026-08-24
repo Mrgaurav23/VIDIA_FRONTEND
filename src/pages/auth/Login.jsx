@@ -24,20 +24,25 @@ function Login() {
     try {
       // API Call to Backend
       const response = await loginUser(loginData);
+      /*
       console.log("========== LOGIN DEBUG ==========");
       console.log("Full login response:", response);
       console.log("response.data:", response?.data);
-
+      */
+     
       // Assuming the backend returns data.user and data.accessToken
       const { user, accessToken } = response.data;
+      /*
       console.log("User received from backend:", user);
       console.log("Access token:", accessToken);
-
+      */
       dispatch(login(user));
+      /*
       console.log("User dispatched to Redux:", user);
       console.log("Redux state after dispatch:", store.getState());
 
       console.log("Login Successful:", user);
+      */
 
       // Store the token
       localStorage.setItem("accessToken", accessToken);
