@@ -1,4 +1,4 @@
-import { Compass, Home, User, History } from "lucide-react";
+import { Home, User, History } from "lucide-react";
 import { BsTwitter } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
