@@ -74,3 +74,28 @@ export const changePassword = async (credentials) => {
     );
   }
 }
+
+export const updateUserAvatar = async (formData) => {
+  try {
+    const response = await api.patch("/users/update-avatar",formData)
+  
+    return response.data
+  } catch (error) {
+    console.error("ERROR :: updateUserAvatarApi",
+      error.response?.data || error.message,
+    );
+    throw error
+  }
+}
+
+export const getWatchHistory = async () => {
+  try {
+    const response = await api.get("/users/watch-history")
+
+    return response.data
+  } catch (error) {
+    console.error("ERROR :: getwatchhistoryapi",
+      error.response?.data || error.message
+    )
+  }
+}
