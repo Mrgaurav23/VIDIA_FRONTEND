@@ -13,8 +13,8 @@ function HistoryView() {
 
       const response = await getWatchHistory();
 
-      console.log("API RESPONSE:", response);
-      console.log("HISTORY DATA:", response?.data);
+      //console.log("API RESPONSE:", response);
+      //console.log("HISTORY DATA:", response?.data);
       setWatchHistory(response?.data || []);
     } catch (error) {
       setError(

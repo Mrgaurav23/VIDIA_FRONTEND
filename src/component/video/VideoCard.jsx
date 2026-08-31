@@ -1,4 +1,3 @@
-import React from "react";
 import { Eye, Clock } from "lucide-react";
 import {
   formatViews,
@@ -6,13 +5,22 @@ import {
   formatTimeAgo,
 } from "../../utils/DataFormator.js";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import AddToPlaylistModal from "../playlist/AddPlaylistModel.jsx";
 
 const FALLBACK_IMAGE_URL =
   "https://via.placeholder.com/320x180?text=No+Thumbnail";
 
-function VideoCard({ video = {}, }) {
-  const navigate = useNavigate()
-  if (!video) {  
+function VideoCard({ video = {} }) {
+  const navigate = useNavigate();
+  const playlists = useSelector((state) => state.playlist.playlists);
+
+  const [showPlaylistModal, setShowPlaylistModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  if (!video) {
     return null;
   }
 
@@ -28,9 +36,10 @@ function VideoCard({ video = {}, }) {
   };
 
   return (
-    <div 
-    onClick={handleCardClick}
-    className="flex flex-col space-y-2 cursor-pointer transition duration-300 ease-in-out transform hover:shadow-2xl hover:shadow-purple-700/50 rounded-xl overflow-hidden bg-gray-800">
+    <div
+      onClick={handleCardClick}
+      className="flex flex-col space-y-2 cursor-pointer transition duration-300 ease-in-out transform hover:shadow-2xl hover:shadow-purple-700/50 rounded-xl overflow-hidden bg-gray-800"
+    >
       {/* thumbnail */}
       <div className="aspect-video relative">
         <img
@@ -59,6 +68,23 @@ function VideoCard({ video = {}, }) {
         >
           {video.title}
         </p>
+
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowPlaylistModal(true);
+          }}
+          className="bg-purple-600 hover:bg-purple-700 text-white text-sm px-3 py-2 rounded-lg"
+        >
+          Add to Playlist
+        </button>
+
+        {showPlaylistModal && (
+          <AddToPlaylistModal
+            videoId={video._id}
+            onClose={() => setShowPlaylistModal(false)}
+          />
+        )}
 
         {/* <p className="text-gray-400 text-sm mt-1">{channelName}</p> */}
 

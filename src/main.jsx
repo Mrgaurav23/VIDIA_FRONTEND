@@ -13,6 +13,7 @@ import {UploadPage} from './index.js'
 import { Provider } from "react-redux";
 import store from './store/store.js'
 import Twitter from "./component/tweet/Twitter.jsx";
+import PlaylistDetail from "./component/playlist/PlaylistDetail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       { path: "upload",
         element: <UploadPage /> 
       },
+      {
+        path: `playlist/:playlistId`,
+        element: <PlaylistDetail />
+      }
 
     ],
   },

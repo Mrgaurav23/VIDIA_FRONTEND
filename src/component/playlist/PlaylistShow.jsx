@@ -1,50 +1,30 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-function PlaylistShow({ playlist }) {
-  if (!playlist) return null;
+function PlaylistShow() {
+  const navigate = useNavigate();
+
+  const playlists = useSelector((state) => state.playlist.playlists);
 
   return (
-    <div className="flex gap-4 bg-gray-800 rounded-lg p-3 hover:bg-gray-750">
-      {/* Thumbnail */}
-      <div className="w-48 h-28 flex-shrink-0 bg-gray-700 rounded-md overflow-hidden">
-        {playlist.firstVideoThumbnail ? (
-          <img
-            src={playlist.firstVideoThumbnail}
-            alt={playlist.name}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-500">
-            No Thumbnail
+    <div className="p-6">
+      <h1 className="mb-6 text-2xl font-bold">My Playlists</h1>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {playlists.map((playlist) => (
+          <div
+            key={playlist._id}
+            onClick={() => navigate(`/playlist/${playlist._id}`)}
+            className="cursor-pointer rounded-lg border p-4 hover:bg-gray-100"
+          >
+            <h2 className="text-lg font-semibold">{playlist.name}</h2>
+
+            <p className="text-sm text-gray-500">
+              {playlist.videos?.length || 0} videos
+            </p>
           </div>
-        )}
-      </div>
-
-      {/* Playlist Info */}
-      <div className="flex-1 min-w-0">
-        <h4 className="text-lg font-semibold text-white truncate">
-          {playlist.name}
-        </h4>
-
-        <p className="text-sm text-gray-400 mt-1 line-clamp-2">
-          {playlist.description || "No description"}
-        </p>
-
-        <div className="flex gap-4 mt-3 text-sm text-gray-500">
-          <span>{playlist.totalVideos || 0} videos</span>
-
-          <span>{playlist.totalViews || 0} views</span>
-        </div>
-      </div>
-
-      {/* View Button */}
-      <div className="flex items-center">
-        <button
-          type="button"
-          className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm"
-        >
-          View
-        </button>
+        ))}
       </div>
     </div>
   );
