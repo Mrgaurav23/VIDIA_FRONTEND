@@ -12,8 +12,8 @@ import {VideoPlayerPage} from "./index.js"
 import {UploadPage} from './index.js'
 import { Provider } from "react-redux";
 import store from './store/store.js'
-import Twitter from "./component/tweet/Twitter.jsx";
 import PlaylistDetail from "./component/playlist/PlaylistDetail.jsx";
+import TweetFeed from "./component/profile/TweetFeed.jsx";
 
 const router = createBrowserRouter([
   {
@@ -45,10 +45,6 @@ const router = createBrowserRouter([
         element: <ProfileDashboard initialTab="history" />,
       },
       {
-        path: "twitter",
-        element : <Twitter /> 
-      },
-      {
         path: "watch/:videoId",
         element: <VideoPlayerPage  />,
       },
@@ -59,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: `playlist/:playlistId`,
         element: <PlaylistDetail />
+      },
+      {
+        path: "twitter",
+        element: <TweetFeed />
       }
 
     ],
