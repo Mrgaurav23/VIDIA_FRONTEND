@@ -35,7 +35,7 @@ function TweetCard({ tweet }) {
     try {
       const response = await updateTweet(tweet._id, content.trim());
 
-      console.log("UPDATE TWEET RESPONSE:", response);
+      //console.log("UPDATE TWEET RESPONSE:", response);
 
       if (response?.data) {
         dispatch(updateTweetInState(response.data));
@@ -51,7 +51,7 @@ function TweetCard({ tweet }) {
     try {
       const response = await deleteTweet(tweet._id);
 
-      console.log("DELETE TWEET RESPONSE:", response);
+      //console.log("DELETE TWEET RESPONSE:", response);
 
       if (response?.data) {
         dispatch(removeTweet(tweet._id));

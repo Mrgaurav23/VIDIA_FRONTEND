@@ -19,7 +19,7 @@ function TweetCreate() {
     try {
       const response = await mutate(content);
 
-      console.log("CREATE TWEET RESPONSE:", response);
+      //console.log("CREATE TWEET RESPONSE:", response);
 
       dispatch(addTweet(response.data));
 

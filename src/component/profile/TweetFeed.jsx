@@ -21,8 +21,7 @@ function TweetFeed() {
 
   useEffect(() => {
     if (data?.data) {
-      console.log("USER TWEETS:", data.data);
-
+      //console.log("USER TWEETS:", data.data);
       dispatch(setTweets(data.data));
     }
   }, [data, dispatch]);

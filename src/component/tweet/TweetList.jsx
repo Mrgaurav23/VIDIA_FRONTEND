@@ -4,7 +4,7 @@ import TweetCard from "./TweetCard";
 
 function TweetList() {
   const tweets = useSelector((state) => state.tweet.tweets);
-  console.log(tweets);
+  //console.log(tweets);
 
   if (!tweets || tweets.length === 0) {
     return (
