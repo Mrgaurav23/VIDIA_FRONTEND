@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { registerUser } from "../../api/auth.api";
 
 function Register() {
   const [fullName, setFullName] = useState("");
@@ -17,7 +17,6 @@ function Register() {
     e.preventDefault();
     setLoading(true);
 
-    const registerUrl = "/users/register";
     const formData = new FormData();
     formData.append("fullName", fullName);
     formData.append("username", username);
@@ -33,14 +32,10 @@ function Register() {
     }
 
     try {
-      const response = await axios.post(registerUrl, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Crucial for file upload
-        },
-      });
+      const response = await registerUser(formData)
       console.log("Registrtion Successfully : ", response.data);
       setSuccessMessage("Account successfully created! You can now log in.");
-      navigate("/login");
+      setTimeout(() => { navigate("/login"); }, 1000);
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
