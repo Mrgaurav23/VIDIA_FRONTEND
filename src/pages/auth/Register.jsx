@@ -17,7 +17,7 @@ function Register() {
     e.preventDefault();
     setLoading(true);
 
-    const registerUrl = "/api/v1/users/register";
+    const registerUrl = "/users/register";
     const formData = new FormData();
     formData.append("fullName", fullName);
     formData.append("username", username);
