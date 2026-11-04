@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.userData);
+  console.log("Current User:", user);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-10 bg-gray-900 border-b border-gray-700 h-16 flex items-center justify-between px-4 lg:px-8 shadow-xl">
