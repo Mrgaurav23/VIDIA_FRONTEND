@@ -48,13 +48,6 @@ function Header() {
           <Upload className="w-6 h-6" />
         </button>
 
-        <button
-          className="p-2 rounded-full text-gray-300 hover:bg-gray-800 hover:text-purple-400 transition duration-150"
-          aria-label="Notifications"
-        >
-          <Bell className="w-6 h-6" />
-        </button>
-
         <div
           onClick={() => navigate("/profile")}
           className="p-1 rounded-full hover:bg-purple-800 transition duration-150 cursor-pointer"
