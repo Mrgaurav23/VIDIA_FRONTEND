@@ -10,7 +10,7 @@ function Start() {
         <img className='w-22 ml-5' src='src\assets\vidia.png' alt="" />
         <div className='bg-black pb-8 py-4 px-4'>
           <h2 className='text-[30px] text-white font-semibold'>Get Started with VIDIA</h2>
-          <Link to='/login' className='flex items-center justify-center w-full bg-white text-black py-3 rounded-lg mt-5'>Continue</Link>
+          <Link to='/home' className='flex items-center justify-center w-full bg-white text-black py-3 rounded-lg mt-5'>Continue</Link>
         </div>
       </div>
     </div>
