@@ -29,7 +29,7 @@ function userChannelProfile(username) {
 
   useEffect(() => {
     if (!username) {
-        console.log("Username missing!");
+        //console.log("Username missing!");
         return
     }
 
