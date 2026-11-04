@@ -50,7 +50,7 @@ function Login() {
       // The refresh token is often handled automatically by an HTTP-only cookie set by the backend.
       //alert("Login Successful!");
       setSuccessMessage("Login Successful!");
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
