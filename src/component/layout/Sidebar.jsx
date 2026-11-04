@@ -11,7 +11,7 @@ function Sidebar() {
   const { isSidebarOpen, activeRoute } = useSelector((state) => state.sidebar);
 
   const navItems = [
-    { name: "Home", icon: Home, route: "/home" },
+    { name: "Home", icon: Home, route: "/" },
     { name: "Twitter", icon: BsTwitter, route: "/twitter" },
     { name: "History", icon: History, route: "/profile/history" },
     { name: "Profile", icon: User, route: "/profile" },
