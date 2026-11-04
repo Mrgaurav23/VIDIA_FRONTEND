@@ -2,15 +2,15 @@ import React from "react";
 import { Menu, Search, Upload, Bell, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toggleSidebar } from "../../store/sidebarSlice.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-10 bg-gray-900 border-b border-gray-700 h-16 flex items-center justify-between px-4 lg:px-8 shadow-xl">
-
       {/* Left Section */}
       <div className="flex items-center">
         <button
@@ -39,7 +39,6 @@ function Header() {
 
       {/* Right Section: Actions and Profile */}
       <div className="flex items-center gap-3">
-
         <button
           onClick={() => navigate("/upload")}
           className="p-2 rounded-full text-gray-300 hover:bg-gray-800 hover:text-purple-400 transition duration-150"
@@ -48,32 +47,30 @@ function Header() {
           <Upload className="w-6 h-6" />
         </button>
 
-        <div
-          onClick={() => navigate("/profile")}
-          className="p-1 rounded-full hover:bg-purple-800 transition duration-150 cursor-pointer"
-          aria-label="User Profile"
-        >
-          <User className="w-7 h-7 text-purple-400 border border-purple-400 rounded-full p-0.5" /> 
-        </div>
+        {!user ? (
+          <>
+            <button
+              onClick={() => navigate("/login")}
+              className="px-5 py-2 rounded-xl border border-gray-400 text-white hover:bg-gray-800 transition"
+            >
+              Login
+            </button>
 
-        <div className="h-8 w-px bg-gray-600 mx-2"></div>
-
-        {/* Login Button */}
-        <button
-          onClick={() => navigate("/login")}
-          className="px-5 py-2 rounded-xl border border-gray-400 text-white font-medium hover:bg-gray-800 transition duration-200"
-        >
-          Login
-        </button>
-
-        {/* Sign Up Button */}
-        <button
-          onClick={() => navigate("/register")}
-          className="px-5 py-2 rounded-xl bg-purple-600 text-white font-medium hover:bg-purple-700 transition duration-200 shadow-md"
-        >
-          Sign Up
-        </button>
-
+            <button
+              onClick={() => navigate("/register")}
+              className="px-5 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition"
+            >
+              Sign Up
+            </button>
+          </>
+        ) : (
+          <div
+            onClick={() => navigate("/profile")}
+            className="p-1 rounded-full hover:bg-purple-800 cursor-pointer"
+          >
+            <User className="w-7 h-7 text-purple-400 border border-purple-400 rounded-full p-0.5" />
+          </div>
+        )}
       </div>
     </header>
   );
