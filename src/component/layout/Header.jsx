@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { status, userData } = useSelector((state) => state.auth);
+  const { status, userData, authChecked } = useSelector((state) => state.auth);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-10 bg-gray-900 border-b border-gray-700 h-16 flex items-center justify-between px-4 lg:px-8 shadow-xl">
@@ -47,30 +47,33 @@ function Header() {
           <Upload className="w-6 h-6" />
         </button>
 
-        {!status ? (
-          <>
-            <button
-              onClick={() => navigate("/login")}
-              className="px-5 py-2 rounded-xl border border-gray-400 text-white hover:bg-gray-800 transition"
-            >
-              Login
-            </button>
+        <div className="flex items-center gap-3">
+          {!authChecked ? // Authentication check hone tak kuch show nahi hoga
+          null : !status ? (
+            <>
+              <button
+                onClick={() => navigate("/login")}
+                className="px-5 py-2 rounded-xl border border-gray-400 text-white hover:bg-gray-800 transition"
+              >
+                Login
+              </button>
 
-            <button
-              onClick={() => navigate("/register")}
-              className="px-5 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition"
+              <button
+                onClick={() => navigate("/register")}
+                className="px-5 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition"
+              >
+                Sign Up
+              </button>
+            </>
+          ) : (
+            <div
+              onClick={() => navigate("/profile")}
+              className="p-1 rounded-full hover:bg-purple-800 cursor-pointer"
             >
-              Sign Up
-            </button>
-          </>
-        ) : (
-          <div
-            onClick={() => navigate("/profile")}
-            className="p-1 rounded-full hover:bg-purple-800 cursor-pointer"
-          >
-            <User className="w-7 h-7 text-purple-400 border border-purple-400 rounded-full p-0.5" />
-          </div>
-        )}
+              <User className="w-7 h-7 text-purple-400 border border-purple-400 rounded-full p-0.5" />
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

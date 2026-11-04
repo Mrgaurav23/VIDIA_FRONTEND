@@ -3,6 +3,7 @@ import { Header } from "./index.js";
 import { useState } from "react";
 import { Sidebar } from "./index.js";
 import { useSelector } from "react-redux";
+import AuthInitializer from './routes/AuthInitializer.jsx'
 
 function App() {
   const isSidebarOpen = useSelector((state) => state.sidebar.isSidebarOpen);
@@ -10,6 +11,7 @@ function App() {
   
   return (
     <div className="min-h-screen bg-gray-900 font-sans text-gray-100">
+      <AuthInitializer />
       <Header />
       <Sidebar />
 
