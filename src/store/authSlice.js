@@ -3,15 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const savedUser = localStorage.getItem("userData");
 
 const initialState = {
-  //status : false
-  //userData : null
   status: !!savedUser,
   userData: savedUser ? JSON.parse(savedUser) : null,
 };
 
 const authSlice = createSlice({
   name: "auth",
-
   initialState,
 
   reducers: {

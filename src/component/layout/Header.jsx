@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.userData);
-  console.log("Current User:", user);
+  const { status, userData } = useSelector((state) => state.auth);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-10 bg-gray-900 border-b border-gray-700 h-16 flex items-center justify-between px-4 lg:px-8 shadow-xl">
@@ -48,7 +47,7 @@ function Header() {
           <Upload className="w-6 h-6" />
         </button>
 
-        {!user ? (
+        {!status ? (
           <>
             <button
               onClick={() => navigate("/login")}
